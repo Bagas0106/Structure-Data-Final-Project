@@ -7,5 +7,6 @@ int main(){
     cout << "Bagas Tampan" << endl;
     cout << "Bagas Tampan" << endl;
     cout << "Arthur Tampan" << endl;
+    cout << "Anjay" << endl;
     return 0;
 }
