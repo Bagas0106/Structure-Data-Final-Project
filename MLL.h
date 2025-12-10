@@ -29,8 +29,15 @@ struct daerah {
     infoDaerah infoD;
 };
 
-struct ListProvinsi {
+struct listProvinsi {
     adrProvinsi first;
     adrProvinsi last;
 };
 
+
+void createListProvinsi(listProvinsi &L);
+bool isEmptyProvinsi(listProvinsi L);
+bool isEmptyDaerah(adrDaerah p);
+void addProvinsi(listProvinsi &L, adrProvinsi p);
+void addDaerah(listProvinsi &L, adrDaerah p);
+adrProvinsi createElmProvinsi(string namaProvinsi, string Ibukota);
