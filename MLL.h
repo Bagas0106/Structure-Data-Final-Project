@@ -5,6 +5,7 @@ struct infoProvinsi {
     string namaProvinsi;
     string ibuKota;
     string zonaWaktu
+    float pertumbuhanEkonomi;
 };
 
 struct infoDaerah {
@@ -50,5 +51,13 @@ void addDaerah(listProvinsi &L, adrDaerah p);
 bool isPoor(listProvinsi L);
 adrDaerah searchIbuKota(adrProvinsi p);
 void printProvinsi(listProvinsi L);
+void printDaerahAll(listProvinsi L);
 void printDaerah(adrProvinsi p);
 adrProvinsi searchProvinsi(listProvinsi L, string provinsi);
+adrDaerah searchDaerah(listProvinsi L, string daerah);
+void sortAscending(listProvinsi &L);
+void sortDescending(listProvinsi &L);
+void editData(listProvinsi &L, string nama); /*Search provinsi dulu, kalau null lanjut ke search Daerah*/
+void deleteData(listProvinsi &L, string nama);
+
+/*Sort, Searching, Print (Parrent, Child sebuah Provinsi, Child All), Edit, Func Operasi, Delete*/
