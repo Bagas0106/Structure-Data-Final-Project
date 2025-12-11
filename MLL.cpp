@@ -1,4 +1,7 @@
 #include "MLL.h"
+#include <iostream>
+
+using namespace std;
 
 void createListProvinsi(listProvinsi &L){
     L.first = nullptr;
@@ -50,4 +53,78 @@ void addDaerah(listProvinsi &L, adrDaerah p){
         q->next = p;
         p->prev = q;
     }
+}
+bool isPoor(adrProvinsi p){
+
+}
+adrDaerah searchIbuKota(adrProvinsi p){
+
+}
+void printProvinsi(listProvinsi L){
+    adrProvinsi p = L.first;
+    while (p != nullptr){
+        cout << p->info.namaProvinsi;
+        if (p->next != nullptr){
+            cout << ", "
+        }
+        p = p->next;
+    }
+    cout << endl;
+}
+void printDaerahAll(listProvinsi L){
+    adrProvinsi p;
+    adrDaerah q;
+    if (L.first == nullptr){
+        cout << "Tidak ada data"
+    } else {
+        p = L.first;
+        while (p != nullptr){
+            q = p->firstDaerah;
+            if (q == nullptr){
+                cout << "Tidak ada Daerah" << endl;
+            }
+            while (q != nullptr){
+                cout << q->info.namaDaerah;
+                if (q->next != nullptr){
+                    cout << ", ";
+                }
+                q = q->next;
+            }
+            p = p->next;
+        }
+    }
+    cout << endl;
+}
+void printDaerah(adrProvinsi p){
+    adrDaerah q;
+    if(p->firstDaerah == nullptr){
+        cout << "Tidak ada Daerah" << endl;
+    } else {
+        q = p->firstDaerah;
+        while (q != nullptr){
+            cout << q->info.namaDaerah;
+            if (q->next != nullptr){
+                cout << ", ";
+            }
+            q = q->next;
+        }
+    }
+}
+adrProvinsi searchProvinsi(listProvinsi L, string provinsi){
+
+}
+adrDaerah searchDaerah(listProvinsi L, string daerah){
+
+}
+void sortAscending(listProvinsi &L){
+
+}
+void sortDescending(listProvinsi &L){
+
+}
+void editData(listProvinsi &L, string nama){
+
+} /*Search provinsi dulu, kalau null lanjut ke search Daerah*/
+void deleteData(listProvinsi &L, string nama){
+
 }

@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/TUGAS KULIAH/semester 3/structure data/Final Project",
-      "program": "c:/TUGAS KULIAH/semester 3/structure data/Final Project/build/Debug/outDebug",
+      "cwd": "c:/Users/Lenovo/Desktop/Kuliah/Matkul Semester 3/Struktur Data/Tugas Besar/Structure-Data-Final-Project",
+      "program": "c:/Users/Lenovo/Desktop/Kuliah/Matkul Semester 3/Struktur Data/Tugas Besar/Structure-Data-Final-Project/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
