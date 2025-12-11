@@ -4,13 +4,16 @@ using namespace std;
 struct infoProvinsi {
     string namaProvinsi;
     string ibuKota;
+    string zonaWaktu
 };
 
 struct infoDaerah {
     string namaDaerah;
     int populasi;
     int gajiRataRata;
-    string wisata;
+    int luasWilayah;
+    string tipeWilayah
+    string kodeBPS
 };
 
 typedef struct provinsi *adrProvinsi;
