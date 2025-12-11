@@ -43,7 +43,8 @@ struct listProvinsi {
 void createListProvinsi(listProvinsi &L);
 bool isEmptyProvinsi(listProvinsi L);
 bool isEmptyDaerah(adrProvinsi p);
-void addProvinsi(listProvinsi &L, adrProvinsi p);
-void addDaerah(listProvinsi &L, adrDaerah p);
 adrProvinsi createElmProvinsi(infoP p);
 adrDaerah createElmDaerah(infoD p);
+void addProvinsi(listProvinsi &L, adrProvinsi p);
+void addDaerah(listProvinsi &L, adrDaerah p);
+
