@@ -9,5 +9,9 @@ bool isEmptyProvinsi(listProvinsi L){
 bool isEmptyDaerah(adrProvinsi p){
     return p->firstDaerah == nullptr;
 }
-void addProvinsi(listProvinsi &L, adrProvinsi p);
-void addDaerah(listProvinsi &L, adrDaerah p);
+void addProvinsi(listProvinsi &L, adrProvinsi p){
+
+}
+void addDaerah(listProvinsi &L, adrDaerah p){
+    
+}

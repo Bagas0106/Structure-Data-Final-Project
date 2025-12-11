@@ -9,27 +9,29 @@ struct infoProvinsi {
 
 struct infoDaerah {
     string namaDaerah;
+    string tipeWilayah;
     int populasi;
     int gajiRataRata;
     int luasWilayah;
-    string tipeWilayah
-    string kodeBPS
+    string kodeBPS;
 };
 
 typedef struct provinsi *adrProvinsi;
 typedef struct daerah *adrDaerah;
+typedef struct infoProvinsi infoP;
+typedef struct infoDaerah infoD;
 
 struct provinsi {
     adrProvinsi next;
     adrProvinsi prev;
     adrDaerah firstDaerah;
-    infoProvinsi infoP;
+    infoProvinsi info;
 };
 
 struct daerah {
     adrDaerah next;
     adrDaerah prev;
-    infoDaerah infoD;
+    infoDaerah info;
 };
 
 struct listProvinsi {
@@ -43,5 +45,5 @@ bool isEmptyProvinsi(listProvinsi L);
 bool isEmptyDaerah(adrProvinsi p);
 void addProvinsi(listProvinsi &L, adrProvinsi p);
 void addDaerah(listProvinsi &L, adrDaerah p);
-adrProvinsi createElmProvinsi(string namaProvinsi, string Ibukota);
-adrDaerah createElmDaerah()
+adrProvinsi createElmProvinsi(infoP p);
+adrDaerah createElmDaerah(infoD p);
