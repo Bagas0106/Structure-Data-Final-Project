@@ -48,3 +48,7 @@ adrDaerah createElmDaerah(infoD p);
 void addProvinsi(listProvinsi &L, adrProvinsi p);
 void addDaerah(listProvinsi &L, adrDaerah p);
 bool isPoor(listProvinsi L);
+adrDaerah searchIbuKota(adrProvinsi p);
+void printProvinsi(listProvinsi L);
+void printDaerah(adrProvinsi p);
+adrProvinsi searchProvinsi(listProvinsi L, string provinsi);
