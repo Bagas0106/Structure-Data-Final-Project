@@ -47,4 +47,4 @@ adrProvinsi createElmProvinsi(infoP p);
 adrDaerah createElmDaerah(infoD p);
 void addProvinsi(listProvinsi &L, adrProvinsi p);
 void addDaerah(listProvinsi &L, adrDaerah p);
-
+bool isPoor(listProvinsi L);
