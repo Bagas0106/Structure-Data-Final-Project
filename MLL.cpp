@@ -111,10 +111,33 @@ void printDaerah(adrProvinsi p){
     }
 }
 adrProvinsi searchProvinsi(listProvinsi L, string provinsi){
-
+    adrProvinsi p;
+    if (L.first == nullptr){
+        cout << "Kosong"
+    } else {
+        p = L.first;
+        while (p != nullptr){
+            if (p->info.namaProvinsi == provinsi){
+                return p;
+            }
+            p = p->next;
+        }
+        return nullptr;
+    }
 }
 adrDaerah searchDaerah(listProvinsi L, string daerah){
-
+    adrProvinsi p;
+    adrDaerah q;
+    if (L.first == nullptr){
+        cout << "Provinsi kosong";
+    } else {
+        p = L.first;
+        while (p != nullptr){
+            
+            p = p->next;
+        }
+        return nullptr;
+    }
 }
 void sortAscending(listProvinsi &L){
 
