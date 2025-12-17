@@ -4,7 +4,7 @@ using namespace std;
 struct infoProvinsi {
     string namaProvinsi;
     string ibuKota;
-    string zonaWaktu
+    string zonaWaktu;
     float pertumbuhanEkonomi;
 };
 
