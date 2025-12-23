@@ -55,15 +55,24 @@ void addDaerah(listProvinsi &L, adrDaerah p){
     }
 }
 
-adrDaerah searchIbuKota(adrProvinsi p){
-    
+adrDaerah searchIbuKota(adrProvinsi p, string ibuKota){
+    if (p == nullptr){
+        return nullptr;
+    }
+    adrDaerah temp = p->firstDaerah;
+    while (temp != nullptr){
+        if (temp->info.namaDaerah == ibuKota){
+            return temp;
+        }
+    }
+    return nullptr;
 }
 void printProvinsi(listProvinsi L){
     adrProvinsi p = L.first;
     while (p != nullptr){
         cout << p->info.namaProvinsi;
         if (p->next != nullptr){
-            cout << ", "
+            cout << ", ";
         }
         p = p->next;
     }
@@ -73,7 +82,7 @@ void printDaerahAll(listProvinsi L){
     adrProvinsi p;
     adrDaerah q;
     if (L.first == nullptr){
-        cout << "Tidak ada data"
+        cout << "Tidak ada data";
     } else {
         p = L.first;
         while (p != nullptr){
@@ -111,7 +120,7 @@ void printDaerah(adrProvinsi p){
 adrProvinsi searchProvinsi(listProvinsi L, string provinsi){
     adrProvinsi p;
     if (L.first == nullptr){
-        cout << "Kosong"
+        cout << "Kosong";
     } else {
         p = L.first;
         while (p != nullptr){
@@ -138,10 +147,65 @@ adrDaerah searchDaerah(listProvinsi L, string daerah){
     }
 }
 void sortAscending(listProvinsi &L){
+    if (L.first == nullptr || L.first->next == nullptr){
+        return;
+    }
 
+    bool tukar = true;
+    adrProvinsi ptr;
+    adrProvinsi lptr = nullptr;
+
+    while (tukar){
+        tukar = false;
+        ptr = L.first;
+
+        while (ptr->next != lptr){
+            if (ptr->info.namaProvinsi > ptr->next->info.namaProvinsi){
+                string tempp = ptr->info.namaProvinsi;
+                ptr->info.ibuKota = ptr->next->info.namaProvinsi;
+                ptr->next->info.namaProvinsi = tempp;
+
+                adrDaerah tempd = ptr->firstDaerah;
+                ptr->firstDaerah = ptr->next->firstDaerah;
+                ptr->next->firstDaerah = tempd;
+
+                tukar = true;
+            }
+            ptr = ptr->next;
+        }
+        lptr = ptr;
+    }
 }
 void sortDescending(listProvinsi &L){
+    if (L.first == nullptr || L.first->next == nullptr){
+        return;
+    }
 
+    bool tukar = true;
+    adrProvinsi ptr;
+    adrProvinsi lptr = nullptr;
+
+    while (tukar){
+        tukar = false;
+        ptr = L.first;
+
+        while (ptr->next != lptr){
+            if (ptr->info.namaProvinsi < ptr->next->info.namaProvinsi){
+
+                string tempp = ptr->info.namaProvinsi;
+                ptr->info.namaProvinsi = ptr->next->info.namaProvinsi;
+                ptr->next->info.namaProvinsi = tempp;
+
+                adrDaerah tempd = ptr->firstDaerah;
+                ptr->firstDaerah = ptr->next->firstDaerah;
+                ptr->next->firstDaerah = tempd;
+
+                tukar = true;
+            }
+            ptr = ptr->next;
+        }
+        lptr = ptr;
+    }
 }
 void editData(listProvinsi &L, string nama){
 
