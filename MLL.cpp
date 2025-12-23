@@ -42,18 +42,15 @@ void addProvinsi(listProvinsi &L, adrProvinsi p){
         L.last = p;
     }
 }
-void addDaerah(listProvinsi &L, adrDaerah p){
-    adrDaerah q = nullptr;
-    adrProvinsi t = L.first;
-    if (t->firstDaerah == nullptr){
-        t->firstDaerah = p;
-    } else {
-        q = t->firstDaerah;
+void addDaerah(adrProvinsi p, adrDaerah d){
+    adrDaerah q = p->firstDaerah;
+    if (q == nullptr){
+        q = d;
+    }else {
         while (q->next != nullptr){
             q = q->next;
         }
-        q->next = p;
-        p->prev = q;
+        q->next = d;
     }
 }
 
