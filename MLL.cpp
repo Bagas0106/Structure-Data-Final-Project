@@ -54,11 +54,9 @@ void addDaerah(listProvinsi &L, adrDaerah p){
         p->prev = q;
     }
 }
-bool isPoor(adrProvinsi p){
 
-}
 adrDaerah searchIbuKota(adrProvinsi p){
-
+    
 }
 void printProvinsi(listProvinsi L){
     adrProvinsi p = L.first;
@@ -149,5 +147,8 @@ void editData(listProvinsi &L, string nama){
 
 } /*Search provinsi dulu, kalau null lanjut ke search Daerah*/
 void deleteData(listProvinsi &L, string nama){
+
+}
+bool isPoor(adrProvinsi p){
 
 }
