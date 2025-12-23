@@ -296,8 +296,20 @@ void deleteData(listProvinsi &L, string nama){
 int totalPopulasi(adrDaerah d){
     return d->info.populasiDewasa + d->info.populasiAnak;
 }
-bool isPenuh(adrDaerah d){
-
+int isPenuh(adrDaerah d){
+    int kepadatanPenduduk = 0;
+    kepadatanPenduduk = totalPopulasi(d) / d->info.luasWilayah;
+    if (kepadatanPenduduk <= 50){
+        return 1;
+    } else if ((kepadatanPenduduk > 50) && (kepadatanPenduduk <= 250)){
+        return 2;
+    } else if ((kepadatanPenduduk > 250) && (kepadatanPenduduk <= 500)){
+        return 3;
+    } else if ((kepadatanPenduduk > 500) && (kepadatanPenduduk <= 1000)){
+        return 4;
+    } else {
+        return 5;
+    }
 }
 float gajiRataRata(adrDaerah d){ 
     int totalGaji = 0;

@@ -66,6 +66,6 @@ void editData(listProvinsi &L, string nama); /*Search provinsi dulu, kalau null 
 void deleteData(listProvinsi &L, string nama);
 void deleteAllChild(adrProvinsi p);
 int totalPopulasi(adrDaerah d);
-bool isPenuh(adrDaerah d);
+bool isPenuh(adrDaerah d);  // 1:Sangat rendah, 2:Rendah, 3:Sedang, 4:Padat, 5:Sangat Padat
 
 /*Sort, Searching, Print (Parrent, Child sebuah Provinsi, Child All), Edit, Func Operasi, Delete*/
