@@ -5,6 +5,7 @@ using namespace std;
 
 void createListProvinsi(listProvinsi &L){
     L.first = nullptr;
+    L.last = nullptr;
 }
 bool isEmptyProvinsi(listProvinsi L){
     return L.first == nullptr;
@@ -43,10 +44,11 @@ void addProvinsi(listProvinsi &L, adrProvinsi p){
 }
 void addDaerah(listProvinsi &L, adrDaerah p){
     adrDaerah q = nullptr;
-    if (L->firstDaerah == nullptr){
-        L->firstDaerah = p;
+    adrProvinsi miko = L.first;
+    if (miko->firstDaerah == nullptr){
+        miko->firstDaerah = p;
     } else {
-        q = L->firstDaerah;
+        q = miko->firstDaerah;
         while (q->next != nullptr){
             q = q->next;
         }
