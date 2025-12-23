@@ -210,10 +210,44 @@ void sortDescending(listProvinsi &L){
     }
 }
 void editData(listProvinsi &L, string nama){
+    string newname;
+
+    adrProvinsi p = L.first;
+    while (p != nullptr){
+        if (p->info.namaProvinsi == nama){
+            cout << "[PROVINSI DITEMUKAN!]" << nama << endl;
+            cout << "Masukan Nama Provinsi baru: ";
+            cin >> newname;
+
+            p->info.namaProvinsi = newname;
+            cout << "[DATA BERHASIL DIUBAH!]" << endl;
+            return;
+        }
+        p = p->next;
+    }
+
+    p = L.first;
+    while (p != nullptr){
+        adrDaerah d = p->firstDaerah;
+
+        while(d != nullptr){
+            cout << "[DAERAH DITEMUKAN!]" << nama << "Diprovinsi " << p->info.namaProvinsi << endl;
+            cout << "Masukan Nama Daerah Baru: ";
+            cin >> newname;
+
+            d->info.namaDaerah = newname;
+            cout << "[DATA BERHASIL DIUBAH!]" << endl;
+            return;
+        }
+        d = d->next
+    }
+    p = p->next;
+
+    cout << "Maaf , data '" << nama << "'Tidak ditemukan di provinsi maupun didaerah manapun." << endl;
 
 } /*Search provinsi dulu, kalau null lanjut ke search Daerah*/
 void deleteData(listProvinsi &L, string nama){
-
+    
 }
 bool isPoor(adrProvinsi p){
 
