@@ -25,7 +25,7 @@ adrDaerah createElmDaerah(infoD p){
     adrDaerah q = new daerah;
     q->info = p;
     q->next = nullptr;
-    q->prev = nullptr;
+    q->prev =gi nullptr;
     return q;
 }
 void addProvinsi(listProvinsi &L, adrProvinsi p){
@@ -209,9 +209,22 @@ void sortDescending(listProvinsi &L){
         lptr = ptr;
     }
 }
+void deleteAllChild(adrProvinsi p){
+    adrDaerah q;
+    if (p->firstDaerah != nullptr){
+        q = firstDaerah;
+        while (q != nullptr){
+            while  (q->next != nullptr){
+                q = q->next;
+            }
+            q->next->prev = nullptr;
+            q->next = nullptr;
+        }
+    }
+}
 void editData(listProvinsi &L, string nama){
     string newname;
-
+    
     adrProvinsi p = L.first;
     while (p != nullptr){
         if (p->info.namaProvinsi == nama){
@@ -231,24 +244,68 @@ void editData(listProvinsi &L, string nama){
         adrDaerah d = p->firstDaerah;
 
         while(d != nullptr){
-            cout << "[DAERAH DITEMUKAN!]" << nama << "Diprovinsi " << p->info.namaProvinsi << endl;
-            cout << "Masukan Nama Daerah Baru: ";
-            cin >> newname;
+            if (d->info.namaDaerah == nama){
+                cout << "[DAERAH DITEMUKAN!]" << nama << "Diprovinsi " << p->info.namaProvinsi << endl;
+                cout << "Masukan Nama Daerah Baru: ";
+                cin >> newname;
 
-            d->info.namaDaerah = newname;
-            cout << "[DATA BERHASIL DIUBAH!]" << endl;
-            return;
+                d->info.namaDaerah = newname;
+                cout << "[DATA BERHASIL DIUBAH!]" << endl;
+                return;
+            }
+            d = d->next;
         }
-        d = d->next;
+        p = p->next;
     }
-    p = p->next;
 
     cout << "Maaf , data '" << nama << "'Tidak ditemukan di provinsi maupun didaerah manapun." << endl;
 
 } /*Search provinsi dulu, kalau null lanjut ke search Daerah*/
 void deleteData(listProvinsi &L, string nama){
-    
-}
-bool isPoor(adrProvinsi p){
+    adrProvinsi p = L.first;
+    while (p != nullptr){
+        if (p->info.namaProvinsi == nama){
+            p->next->prev = p->prev;
+            p->prev->next = p->next;
+            p->next = nullptr;
+            p->prev = nullptr;
+            deleteAllChild(p);
+            return;
+        }
+        p = p->next;
+    }
+    p = L.first;
+    while (p != nullptr){
+        adrDaerah d = p->firstDaerah;
 
+        while(d != nullptr){
+            if (d->info.namaDaerah == nama){
+                d->next->prev = d->prev;
+                d->prev->next = d->next;
+                d->next = nullptr;
+                d->prev = nullptr;
+                cout << "[DATA BERHASIL DIHAPUS!]" << endl;
+                return;
+            }
+            d = d->next;
+        }
+        p = p->next;
+    }
+    cout << "Maaf , data '" << nama << "'Tidak ditemukan di provinsi maupun didaerah manapun." << endl;
+}
+int totalPopulasi(adrDaerah d){
+    return d->info.populasiDewasa + d->info.populasiAnak;
+}
+bool isPenuh(adrDaerah d){
+
+}
+float gajiRataRata(adrDaerah d){ 
+    int totalGaji = 0;
+    float gajiRataRata = 0;
+    totalGaji = (d->info.pendapatan4juta * 4000000) + (d->info.pendapatan3juta * 3000000) + (d->info.pendapatan2juta * 2000000) + (d->info.pendapatan1juta * 1000000);
+    gajiRataRata = float(totalGaji) / d->info.populasiDewasa;
+    return gajiRataRata;
+}
+bool isPoor(adrDaerah d){
+    return gajirataRata(d) < 3000000;
 }

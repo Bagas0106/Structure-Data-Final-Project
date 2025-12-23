@@ -3,7 +3,7 @@ using namespace std;
 
 struct infoProvinsi {
     string namaProvinsi;
-    string ibuKota;
+    string ibuKota; //nampilin data ibuKota
     string zonaWaktu;
     float pertumbuhanEkonomi;
 };
@@ -11,9 +11,9 @@ struct infoProvinsi {
 struct infoDaerah {
     string namaDaerah;
     string tipeWilayah;
-    int populasi;
-    int gajiRataRata;
-    int luasWilayah;
+    int populasi; // belum diset (set di main panggil gajiRataRata)
+    float gajiRataRata; // belum diset (set di main panggil gajiRataRata)
+    int luasWilayah; //cek kepadatan penduduk
     int populasiDewasa;
     int populasiAnak;
     int pendapatan4juta;
@@ -53,7 +53,7 @@ adrProvinsi createElmProvinsi(infoP p);
 adrDaerah createElmDaerah(infoD p);
 void addProvinsi(listProvinsi &L, adrProvinsi p);
 void addDaerah(listProvinsi &L, adrDaerah p);
-bool isPoor(adrProvinsi p);
+bool isPoor(adrDaerah d);
 adrDaerah searchIbuKota(adrProvinsi p, string ibuKota);
 void printProvinsi(listProvinsi L);
 void printDaerahAll(listProvinsi L);
@@ -64,5 +64,8 @@ void sortAscending(listProvinsi &L);
 void sortDescending(listProvinsi &L);
 void editData(listProvinsi &L, string nama); /*Search provinsi dulu, kalau null lanjut ke search Daerah*/
 void deleteData(listProvinsi &L, string nama);
+void deleteAllChild(adrProvinsi p);
+int totalPopulasi(adrDaerah d);
+bool isPenuh(adrDaerah d);
 
 /*Sort, Searching, Print (Parrent, Child sebuah Provinsi, Child All), Edit, Func Operasi, Delete*/
