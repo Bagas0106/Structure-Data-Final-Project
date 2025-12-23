@@ -25,7 +25,7 @@ adrDaerah createElmDaerah(infoD p){
     adrDaerah q = new daerah;
     q->info = p;
     q->next = nullptr;
-    q->prev =gi nullptr;
+    q->prev = nullptr;
     return q;
 }
 void addProvinsi(listProvinsi &L, adrProvinsi p){
@@ -212,7 +212,7 @@ void sortDescending(listProvinsi &L){
 void deleteAllChild(adrProvinsi p){
     adrDaerah q;
     if (p->firstDaerah != nullptr){
-        q = firstDaerah;
+        q = p->firstDaerah;
         while (q != nullptr){
             while  (q->next != nullptr){
                 q = q->next;
@@ -319,5 +319,5 @@ float gajiRataRata(adrDaerah d){
     return gajiRataRata;
 }
 bool isPoor(adrDaerah d){
-    return gajirataRata(d) < 3000000;
+    return gajiRataRata(d) < 3000000;
 }
