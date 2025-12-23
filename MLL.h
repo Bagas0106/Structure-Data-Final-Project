@@ -14,7 +14,12 @@ struct infoDaerah {
     int populasi;
     int gajiRataRata;
     int luasWilayah;
-    string kodeBPS;
+    int populasiDewasa;
+    int populasiAnak;
+    int pendapatan4juta;
+    int pendapatan3juta;
+    int pendapatan2juta;
+    int pendapatan1juta;
 };
 
 typedef struct provinsi *adrProvinsi;

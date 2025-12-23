@@ -44,11 +44,11 @@ void addProvinsi(listProvinsi &L, adrProvinsi p){
 }
 void addDaerah(listProvinsi &L, adrDaerah p){
     adrDaerah q = nullptr;
-    adrProvinsi miko = L.first;
-    if (miko->firstDaerah == nullptr){
-        miko->firstDaerah = p;
+    adrProvinsi t = L.first;
+    if (t->firstDaerah == nullptr){
+        t->firstDaerah = p;
     } else {
-        q = miko->firstDaerah;
+        q = t->firstDaerah;
         while (q->next != nullptr){
             q = q->next;
         }
@@ -239,7 +239,7 @@ void editData(listProvinsi &L, string nama){
             cout << "[DATA BERHASIL DIUBAH!]" << endl;
             return;
         }
-        d = d->next
+        d = d->next;
     }
     p = p->next;
 
