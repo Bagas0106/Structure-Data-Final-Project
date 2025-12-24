@@ -52,7 +52,7 @@ bool isEmptyDaerah(adrProvinsi p);
 adrProvinsi createElmProvinsi(infoP p);
 adrDaerah createElmDaerah(infoD p);
 void addProvinsi(listProvinsi &L, adrProvinsi p);
-void addDaerah(listProvinsi &L, adrDaerah p);
+void addDaerah(adrProvinsi p, adrDaerah d);
 bool isPoor(adrDaerah d);
 adrDaerah searchIbuKota(adrProvinsi p, string ibuKota);
 void printProvinsi(listProvinsi L);
@@ -67,5 +67,5 @@ void deleteData(listProvinsi &L, string nama);
 void deleteAllChild(adrProvinsi p);
 int totalPopulasi(adrDaerah d);
 int isPenuh(adrDaerah d);  // 1:Sangat rendah, 2:Rendah, 3:Sedang, 4:Padat, 5:Sangat Padat
-
+float gajiRataRata(adrDaerah d);
 /*Sort, Searching, Print (Parrent, Child sebuah Provinsi, Child All), Edit, Func Operasi, Delete*/

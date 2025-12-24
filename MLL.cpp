@@ -51,6 +51,7 @@ void addDaerah(adrProvinsi p, adrDaerah d){
             q = q->next;
         }
         q->next = d;
+        d->prev = q;
     }
 }
 
@@ -63,6 +64,7 @@ adrDaerah searchIbuKota(adrProvinsi p, string ibuKota){
         if (temp->info.namaDaerah == ibuKota){
             return temp;
         }
+        temp = temp->next;
     }
     return nullptr;
 }
@@ -132,18 +134,18 @@ adrProvinsi searchProvinsi(listProvinsi L, string provinsi){
     }
 }
 adrDaerah searchDaerah(listProvinsi L, string daerah){
-    adrProvinsi p;
-    adrDaerah q;
-    if (L.first == nullptr){
-        cout << "Provinsi kosong";
-    } else {
-        p = L.first;
-        while (p != nullptr){
-            
-            p = p->next;
+    adrProvinsi p = L.first;
+    while (p != nullptr){
+        adrDaerah d = p->firstDaerah;
+        while (d != nullptr){
+            if (d->info.namaDaerah == daerah){
+                return d;
+            }
+            d = d->next;
         }
-        return nullptr;
+        p = p->next;
     }
+    return nullptr;
 }
 void sortAscending(listProvinsi &L){
     if (L.first == nullptr || L.first->next == nullptr){
@@ -161,7 +163,7 @@ void sortAscending(listProvinsi &L){
         while (ptr->next != lptr){
             if (ptr->info.namaProvinsi > ptr->next->info.namaProvinsi){
                 string tempp = ptr->info.namaProvinsi;
-                ptr->info.ibuKota = ptr->next->info.namaProvinsi;
+                ptr->info.namaProvinsi = ptr->next->info.namaProvinsi;
                 ptr->next->info.namaProvinsi = tempp;
 
                 adrDaerah tempd = ptr->firstDaerah;
