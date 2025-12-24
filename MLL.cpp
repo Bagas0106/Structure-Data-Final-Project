@@ -320,3 +320,16 @@ float gajiRataRata(adrDaerah d){
 bool isPoor(adrDaerah d){
     return gajiRataRata(d) < 3000000;
 }
+
+void menu(){
+    cout << "============================================================";
+    cout << "1.Tambah Provinsi                                           ";
+    cout << "2.Tambah Daerah                                             ";
+    cout << "3.Mencari nama IbuKota berdasarkan Nama Kota                ";
+    cout << "4.Mengurutkan ascending berdasarkan Alphabet                ";
+    cout << "5.Mengurutkan decending berdasrkan Alphabet                 ";
+    cout << "6.Edit data                                                 ";
+    cout << "7.Delete Data                                               ";
+    cout << "8.exit                                                      ";
+    
+}
