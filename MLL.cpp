@@ -327,9 +327,35 @@ void menu(){
     cout << "2.Tambah Daerah                                             ";
     cout << "3.Mencari nama IbuKota berdasarkan Nama Kota                ";
     cout << "4.Mengurutkan ascending berdasarkan Alphabet                ";
-    cout << "5.Mengurutkan decending berdasrkan Alphabet                 ";
+    cout << "5.Mengurutkan decending berdasarkan Alphabet                 ";
     cout << "6.Edit data                                                 ";
     cout << "7.Delete Data                                               ";
     cout << "8.exit                                                      ";
+    
+}
+void programPemerintah(adrDaerah d){
+    cout << "Pemerintah membuka lowongan kerja (19 juta) di bidang Industrialisasi & Investasi Sektor Teknologi" << endl;
+    int temp;
+    if (isPoor(d)){
+        temp = d->info.pendapatan1juta
+        d->info.pendapatan1juta = d->info.pendapatan1juta - temp;
+        d->info.pendapatan2jjuta += temp;
+    }
+    if (isPoor(d)){
+        cout << "Program Pemerintah belum berhasil, Pemerintah berusaha memberikan pendidikan lebih tinggi buat masyarakat yang sebelumnya berpendapat 1 juta" << endl;
+        d->info.pendapatan2juta = d->info.pendapatan2juta - temp;
+        d->info.pendapatan3juta += temp;
+    }
+    if (isPoor(d)){
+        cout << "Program Pemerintah masih belum berhasil juga. Pemerintah memutuskan untuk memberikan pendidikan tinggi buat masyarakat berpenghasilan 2 juta" << endl;
+        temp = d->info.pendapatan2juta
+        d->info.pendapatan2juta = d->info.pendapatan2juta - temp;
+        d->info.pendapatan3jjuta += temp;
+    } else {
+        cout << "Masyarakat tidak bisa diselamatan" << endl;
+    }
+}
+
+void sortByPendapatan(adrProvinsi p){
     
 }
