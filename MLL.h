@@ -68,4 +68,8 @@ void deleteAllChild(adrProvinsi p);
 int totalPopulasi(adrDaerah d);
 int isPenuh(adrDaerah d);  // 1:Sangat rendah, 2:Rendah, 3:Sedang, 4:Padat, 5:Sangat Padat
 float gajiRataRata(adrDaerah d);
+void menu();
+void programPemerintah(adrDaerah d);
+void sortByPendapatan(adrProvinsi p);
+void loadDummyData(listProvinsi &L) ;
 /*Sort, Searching, Print (Parrent, Child sebuah Provinsi, Child All), Edit, Func Operasi, Delete*/
