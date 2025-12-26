@@ -1,5 +1,7 @@
 #include "MLL.h"
 #include <iostream>
+#include <cstdlib>
+#include <iomanip> // Library untuk mengatur format angka
 
 using namespace std;
 
@@ -43,10 +45,11 @@ void addProvinsi(listProvinsi &L, adrProvinsi p){
     }
 }
 void addDaerah(adrProvinsi p, adrDaerah d){
-    adrDaerah q = p->firstDaerah;
-    if (q == nullptr){
-        q = d;
+    adrDaerah q;
+    if (p->firstDaerah == nullptr){
+        p->firstDaerah = d;
     }else {
+        q = p->firstDaerah;
         while (q->next != nullptr){
             q = q->next;
         }
@@ -70,14 +73,18 @@ adrDaerah searchIbuKota(adrProvinsi p, string ibuKota){
 }
 void printProvinsi(listProvinsi L){
     adrProvinsi p = L.first;
-    while (p != nullptr){
-        cout << p->info.namaProvinsi;
-        if (p->next != nullptr){
-            cout << ", ";
+    if (p == nullptr){
+        cout << "Tidak ada Provinsi" << endl;
+    } else {
+        while (p != nullptr){
+            cout << p->info.namaProvinsi;
+            if (p->next != nullptr){
+                cout << ", ";
+            }
+            p = p->next;
         }
-        p = p->next;
+        cout << endl;
     }
-    cout << endl;
 }
 void printDaerahAll(listProvinsi L){
     adrProvinsi p;
@@ -92,13 +99,29 @@ void printDaerahAll(listProvinsi L){
                 cout << "Tidak ada Daerah" << endl;
             }
             while (q != nullptr){
-                cout << q->info.namaDaerah;
-                if (q->next != nullptr){
-                    cout << ", ";
+                cout << "Nama Daerah    :" << q->info.namaDaerah << endl;
+                cout << "Tipe Daerah    :" << q->info.tipeWilayah << endl;
+                cout << "Tipe Dewasa    :" << q->info.populasiDewasa << endl;
+                cout << "Tipe Anak      :" << q->info.populasiAnak << endl;
+                cout << "Populasi       :" << q->info.populasi << endl;
+                cout << "Luas Wilayah   :" << q->info.luasWilayah << endl;
+                cout << "Gaji Rata Rata :" << fixed << setprecision(0) << q->info.gajiRataRata << endl;
+                if (q->info.isPenuh == 1){
+                    cout << "Kepadatan      : Sangat Rendah" << endl;
+                } else if (q->info.isPenuh == 2){
+                    cout << "Kepadatan      : Rendah" << endl;
+                } else if (q->info.isPenuh == 3){
+                    cout << "Kepadatan      : Sedang" << endl;
+                } else if (q->info.isPenuh == 4){
+                    cout << "Kepadatan      : Padat" << endl;
+                } else if (q->info.isPenuh == 5){
+                    cout << "Kepadatan      : Sangat Rendah" << endl << endl;
                 }
+                cout << endl;
                 q = q->next;
             }
             p = p->next;
+            cout << endl << endl;
         }
     }
     cout << endl;
@@ -110,10 +133,25 @@ void printDaerah(adrProvinsi p){
     } else {
         q = p->firstDaerah;
         while (q != nullptr){
-            cout << q->info.namaDaerah;
-            if (q->next != nullptr){
-                cout << ", ";
+            cout << "Nama Daerah    :" << q->info.namaDaerah << endl;
+            cout << "Tipe Daerah    :" << q->info.tipeWilayah << endl;
+            cout << "Tipe Dewasa    :" << q->info.populasiDewasa << endl;
+            cout << "Tipe Anak      :" << q->info.populasiAnak << endl;
+            cout << "Populasi       :" << q->info.populasi << endl;
+            cout << "Luas Wilayah   :" << q->info.luasWilayah << endl;
+            cout << "Gaji Rata Rata :" << fixed << setprecision(0) << q->info.gajiRataRata << endl;
+            if (q->info.isPenuh == 1){
+                cout << "Kepadatan      : Sangat Rendah" << endl;
+            } else if (q->info.isPenuh == 2){
+                cout << "Kepadatan      : Rendah" << endl;
+            } else if (q->info.isPenuh == 3){
+                cout << "Kepadatan      : Sedang" << endl;
+            } else if (q->info.isPenuh == 4){
+                cout << "Kepadatan      : Padat" << endl;
+            } else if (q->info.isPenuh == 5){
+                cout << "Kepadatan      : Sangat Rendah" << endl;
             }
+            cout << endl;
             q = q->next;
         }
     }
@@ -148,6 +186,7 @@ adrDaerah searchDaerah(listProvinsi L, string daerah){
     return nullptr;
 }
 void sortAscending(listProvinsi &L){
+    string tempp;
     if (L.first == nullptr || L.first->next == nullptr){
         return;
     }
@@ -162,7 +201,7 @@ void sortAscending(listProvinsi &L){
 
         while (ptr->next != lptr){
             if (ptr->info.namaProvinsi > ptr->next->info.namaProvinsi){
-                string tempp = ptr->info.namaProvinsi;
+                tempp = ptr->info.namaProvinsi;
                 ptr->info.namaProvinsi = ptr->next->info.namaProvinsi;
                 ptr->next->info.namaProvinsi = tempp;
 
@@ -178,6 +217,7 @@ void sortAscending(listProvinsi &L){
     }
 }
 void sortDescending(listProvinsi &L){
+    string tempp;
     if (L.first == nullptr || L.first->next == nullptr){
         return;
     }
@@ -193,7 +233,7 @@ void sortDescending(listProvinsi &L){
         while (ptr->next != lptr){
             if (ptr->info.namaProvinsi < ptr->next->info.namaProvinsi){
 
-                string tempp = ptr->info.namaProvinsi;
+                tempp = ptr->info.namaProvinsi;
                 ptr->info.namaProvinsi = ptr->next->info.namaProvinsi;
                 ptr->next->info.namaProvinsi = tempp;
 
@@ -295,7 +335,7 @@ void deleteData(listProvinsi &L, string nama){
 int totalPopulasi(adrDaerah d){
     return d->info.populasiDewasa + d->info.populasiAnak;
 }
-int isPenuh(adrDaerah d){
+int ispenuh(adrDaerah d){
     int kepadatanPenduduk = 0;
     kepadatanPenduduk = totalPopulasi(d) / d->info.luasWilayah;
     if (kepadatanPenduduk <= 50){
@@ -310,27 +350,39 @@ int isPenuh(adrDaerah d){
         return 5;
     }
 }
-float gajiRataRata(adrDaerah d){
-    int totalGaji = 0;
+float gajiratarata(adrDaerah d){
+    long long totalGaji = 0;
     float gajiRataRata = 0;
-    totalGaji = (d->info.pendapatan4juta * 4000000) + (d->info.pendapatan3juta * 3000000) + (d->info.pendapatan2juta * 2000000) + (d->info.pendapatan1juta * 1000000);
-    gajiRataRata = float(totalGaji) / d->info.populasiDewasa;
+
+    totalGaji = ( (long long)d->info.pendapatan4juta * 4000000LL) + ( (long long)d->info.pendapatan3juta * 3000000LL) + ( (long long)d->info.pendapatan2juta * 2000000LL) + ( (long long)d->info.pendapatan1juta * 1000000LL);
+
+    if (d->info.populasiDewasa > 0) {
+        gajiRataRata = (float)totalGaji / d->info.populasiDewasa;
+    }
     return gajiRataRata;
 }
 bool isPoor(adrDaerah d){
-    return gajiRataRata(d) < 3000000;
+    return gajiratarata(d) < 3000000;
 }
 
 void menu(){
-    cout << "============================================================";
-    cout << "1.Tambah Provinsi                                           ";
-    cout << "2.Tambah Daerah                                             ";
-    cout << "3.Mencari nama IbuKota berdasarkan Nama Kota                ";
-    cout << "4.Mengurutkan ascending berdasarkan Alphabet                ";
-    cout << "5.Mengurutkan decending berdasarkan Alphabet                 ";
-    cout << "6.Edit data                                                 ";
-    cout << "7.Delete Data                                               ";
-    cout << "8.exit                                                      ";
+    clearScreen();
+    cout << "============================================================" << endl;
+    cout << "         SISTEM INFORMASI STATISTIK EKONOMI PROVINSI        " << endl;
+    cout << "============================================================" << endl;
+    cout << "1.Tampilkan Data All                                        " << endl;
+    cout << "2.Tambah Provinsi                                           " << endl;
+    cout << "3.Tambah Daerah                                             " << endl;
+    cout << "4.Cari Provinsi                                             " << endl;
+    cout << "5.Cari Daerah                                               " << endl;
+    cout << "6.Mengurutkan Provinsi ascending berdasarkan Alphabet       " << endl;
+    cout << "7.Mengurutkan Provinsi decending berdasarkan Alphabet       " << endl;
+    cout << "8.Edit data (Provinsi maupun Daerah)                        " << endl;
+    cout << "9.Delete Data                                               " << endl; // Opsi 1 Semua Provinsi, 2 Satu Provinsi, Opsi 3 Ke Menu Utama
+    cout << "10.Tampilkan Gaji Rata Rata (Tiap Provinsi)                 " << endl; // Opsi 1 Urutkan Opsi 2 Ke Menu Utama
+    cout << "11.Tampilkan Provinsi berdasarkan Kepadatan                 " << endl; // Opsi 1 Sangat Padat, 2 Padat, 3 Sedang, Rendah, Sangat Rendah
+    cout << "0.exit                                                      " << endl;
+    cout << "============================================================" << endl << endl;
 
 }
 void programPemerintah(adrDaerah d){
@@ -371,7 +423,7 @@ void sortByPendapatan(adrProvinsi p) {
         d = p->firstDaerah;
 
         while (d->next != last) {
-            if (gajiRataRata(d) < gajiRataRata(d->next)) {
+            if (gajiratarata(d) < gajiratarata(d->next)) {
 
                 infoD tempInfo = d->info;
                 d->info = d->next->info;
@@ -387,84 +439,19 @@ void sortByPendapatan(adrProvinsi p) {
     cout << "Daerah di " << p->info.namaProvinsi << " berhasil diurutkan berdasarkan pendapatan tertinggi." << endl;
 }
 
-void loadDummyData(listProvinsi &L) {
-    adrProvinsi p;
-    infoP ip;
-    infoD id;
+adrDaerah printPoor(adrDaerah d){
+    adrDaerah d1;
+    if (d1 != nullptr){
+        cout << "Pendapatan Rata Rata: " << d1->info.gajiRataRata << endl;
+        return printPoor(d1->next);
+    }
+}
 
-    // --- 1. DKI JAKARTA (6 Daerah) ---
-    ip = {"DKI Jakarta", "Jakarta Pusat", "WIB", 4.8};
-    p = createElmProvinsi(ip); addProvinsi(L, p);
-    addDaerah(p, createElmDaerah({"Jakarta Pusat", "Kota", 0, 0, 48, 100, 200, 300, 400, 50, 50}));
-    addDaerah(p, createElmDaerah({"Jakarta Utara", "Kota", 0, 0, 146, 200, 300, 400, 100, 100, 100}));
-    addDaerah(p, createElmDaerah({"Jakarta Timur", "Kota", 0, 0, 188, 300, 400, 300, 200, 150, 150}));
-    addDaerah(p, createElmDaerah({"Jakarta Selatan", "Kota", 0, 0, 141, 150, 200, 500, 600, 80, 80}));
-    addDaerah(p, createElmDaerah({"Jakarta Barat", "Kota", 0, 0, 129, 250, 350, 450, 150, 120, 120}));
-    addDaerah(p, createElmDaerah({"Kepulauan Seribu", "Kabupaten", 0, 0, 8, 50, 50, 30, 20, 40, 40}));
 
-    // --- 2. JAWA BARAT (10 Daerah) ---
-    ip = {"Jawa Barat", "Bandung", "WIB", 5.4};
-    p = createElmProvinsi(ip); addProvinsi(L, p);
-    addDaerah(p, createElmDaerah({"Bandung", "Kota", 0, 0, 167, 400, 150, 150, 200, 100, 100}));
-    addDaerah(p, createElmDaerah({"Bekasi", "Kota", 0, 0, 210, 600, 100, 100, 300, 400, 150}));
-    addDaerah(p, createElmDaerah({"Depok", "Kota", 0, 0, 200, 500, 120, 130, 250, 200, 100}));
-    addDaerah(p, createElmDaerah({"Bogor", "Kota", 0, 0, 118, 450, 150, 150, 200, 100, 120}));
-    addDaerah(p, createElmDaerah({"Sukabumi", "Kabupaten", 0, 0, 4145, 800, 400, 200, 100, 50, 300}));
-    addDaerah(p, createElmDaerah({"Cianjur", "Kabupaten", 0, 0, 3840, 750, 500, 150, 50, 50, 350}));
-    addDaerah(p, createElmDaerah({"Karawang", "Kabupaten", 0, 0, 1652, 700, 100, 100, 400, 300, 200}));
-    addDaerah(p, createElmDaerah({"Cirebon", "Kota", 0, 0, 37, 300, 100, 100, 150, 50, 50}));
-    addDaerah(p, createElmDaerah({"Garut", "Kabupaten", 0, 0, 3074, 900, 600, 200, 50, 50, 400}));
-    addDaerah(p, createElmDaerah({"Tasikmalaya", "Kota", 0, 0, 171, 400, 200, 150, 50, 0, 150}));
-
-    // --- 3. JAWA TENGAH (10 Daerah) ---
-    ip = {"Jawa Tengah", "Semarang", "WIB", 5.1};
-    p = createElmProvinsi(ip); addProvinsi(L, p);
-    addDaerah(p, createElmDaerah({"Semarang", "Kota", 0, 0, 373, 600, 100, 200, 300, 200, 150}));
-    addDaerah(p, createElmDaerah({"Surakarta", "Kota", 0, 0, 44, 400, 50, 150, 200, 100, 100}));
-    addDaerah(p, createElmDaerah({"Magelang", "Kota", 0, 0, 18, 150, 30, 50, 70, 50, 40}));
-    addDaerah(p, createElmDaerah({"Salatiga", "Kota", 0, 0, 56, 180, 20, 60, 100, 50, 50}));
-    addDaerah(p, createElmDaerah({"Pekalongan", "Kota", 0, 0, 45, 250, 80, 120, 100, 20, 60}));
-    addDaerah(p, createElmDaerah({"Tegal", "Kota", 0, 0, 38, 200, 70, 130, 80, 20, 50}));
-    addDaerah(p, createElmDaerah({"Banyumas", "Kabupaten", 0, 0, 1327, 850, 400, 300, 100, 50, 300}));
-    addDaerah(p, createElmDaerah({"Cilacap", "Kabupaten", 0, 0, 2142, 900, 300, 300, 200, 100, 400}));
-    addDaerah(p, createElmDaerah({"Brebes", "Kabupaten", 0, 0, 1769, 1000, 600, 300, 100, 0, 500}));
-    addDaerah(p, createElmDaerah({"Kudus", "Kabupaten", 0, 0, 425, 450, 50, 100, 200, 200, 100}));
-
-    // --- 4. JAWA TIMUR (10 Daerah) ---
-    ip = {"Jawa Timur", "Surabaya", "WIB", 5.2};
-    p = createElmProvinsi(ip); addProvinsi(L, p);
-    addDaerah(p, createElmDaerah({"Surabaya", "Kota", 0, 0, 350, 900, 50, 150, 400, 500, 200}));
-    addDaerah(p, createElmDaerah({"Malang", "Kota", 0, 0, 110, 500, 50, 100, 300, 150, 100}));
-    addDaerah(p, createElmDaerah({"Batu", "Kota", 0, 0, 199, 200, 20, 80, 100, 50, 40}));
-    addDaerah(p, createElmDaerah({"Kediri", "Kota", 0, 0, 63, 250, 30, 70, 150, 100, 60}));
-    addDaerah(p, createElmDaerah({"Madiun", "Kota", 0, 0, 33, 180, 20, 60, 100, 50, 40}));
-    addDaerah(p, createElmDaerah({"Blitar", "Kota", 0, 0, 32, 160, 30, 70, 60, 40, 40}));
-    addDaerah(p, createElmDaerah({"Mojokerto", "Kota", 0, 0, 16, 140, 20, 50, 70, 30, 30}));
-    addDaerah(p, createElmDaerah({"Pasuruan", "Kota", 0, 0, 36, 180, 40, 80, 60, 20, 50}));
-    addDaerah(p, createElmDaerah({"Probolinggo", "Kota", 0, 0, 56, 200, 60, 100, 40, 20, 60}));
-    addDaerah(p, createElmDaerah({"Sidoarjo", "Kabupaten", 0, 0, 714, 800, 100, 200, 300, 300, 200}));
-
-    // --- 5. BALI (5 Daerah) ---
-    ip = {"Bali", "Denpasar", "WITA", 5.0};
-    p = createElmProvinsi(ip); addProvinsi(L, p);
-    addDaerah(p, createElmDaerah({"Denpasar", "Kota", 0, 0, 127, 500, 20, 80, 250, 250, 100}));
-    addDaerah(p, createElmDaerah({"Badung", "Kabupaten", 0, 0, 418, 450, 10, 50, 200, 300, 100}));
-    addDaerah(p, createElmDaerah({"Gianyar", "Kabupaten", 0, 0, 368, 400, 50, 100, 150, 150, 120}));
-    addDaerah(p, createElmDaerah({"Tabanan", "Kabupaten", 0, 0, 839, 350, 100, 150, 100, 50, 150}));
-    addDaerah(p, createElmDaerah({"Buleleng", "Kabupaten", 0, 0, 1365, 500, 200, 200, 100, 50, 250}));
-
-    // --- 6. PAPUA (9 Daerah) ---
-    ip = {"Papua", "Jayapura", "WIT", 2.5};
-    p = createElmProvinsi(ip); addProvinsi(L, p);
-    addDaerah(p, createElmDaerah({"Jayapura", "Kota", 0, 0, 940, 400, 150, 150, 100, 50, 100}));
-    addDaerah(p, createElmDaerah({"Mimika", "Kabupaten", 0, 0, 21693, 600, 100, 100, 200, 300, 200}));
-    addDaerah(p, createElmDaerah({"Merauke", "Kabupaten", 0, 0, 44071, 350, 200, 100, 50, 50, 150}));
-    addDaerah(p, createElmDaerah({"Biak Numfor", "Kabupaten", 0, 0, 2602, 300, 200, 100, 20, 10, 120}));
-    addDaerah(p, createElmDaerah({"Jayawijaya", "Kabupaten", 0, 0, 7030, 450, 350, 100, 20, 10, 200}));
-    addDaerah(p, createElmDaerah({"Nabire", "Kabupaten", 0, 0, 11112, 320, 200, 100, 30, 10, 150}));
-    addDaerah(p, createElmDaerah({"Keerom", "Kabupaten", 0, 0, 8390, 250, 180, 50, 20, 0, 100}));
-    addDaerah(p, createElmDaerah({"Sarmi", "Kabupaten", 0, 0, 17742, 150, 100, 40, 10, 0, 80}));
-    addDaerah(p, createElmDaerah({"Waropen", "Kabupaten", 0, 0, 10977, 120, 100, 20, 0, 0, 60}));
-
-    cout << "--- [SYSTEM] 50 Data Daerah Berhasil Dimuat! ---" << endl;
+void clearScreen(){
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
 }

@@ -1,4 +1,6 @@
 #include <iostream>
+#include <cstdlib>
+#include <iomanip> // Library untuk mengatur format angka
 using namespace std;
 
 struct infoProvinsi {
@@ -11,7 +13,7 @@ struct infoProvinsi {
 struct infoDaerah {
     string namaDaerah;
     string tipeWilayah;
-    int populasi; // belum diset (set di main panggil gajiRataRata)
+    int populasi; // belum diset (set di main panggil totalPopulasi)
     float gajiRataRata; // belum diset (set di main panggil gajiRataRata)
     int luasWilayah; //cek kepadatan penduduk
     int populasiDewasa;
@@ -20,6 +22,7 @@ struct infoDaerah {
     int pendapatan3juta;
     int pendapatan2juta;
     int pendapatan1juta;
+    int isPenuh;
 };
 
 typedef struct provinsi *adrProvinsi;
@@ -57,6 +60,7 @@ bool isPoor(adrDaerah d);
 adrDaerah searchIbuKota(adrProvinsi p, string ibuKota);
 void printProvinsi(listProvinsi L);
 void printDaerahAll(listProvinsi L);
+void printDaerahAllProvinsi(listProvinsi L);
 void printDaerah(adrProvinsi p);
 adrProvinsi searchProvinsi(listProvinsi L, string provinsi);
 adrDaerah searchDaerah(listProvinsi L, string daerah);
@@ -66,10 +70,12 @@ void editData(listProvinsi &L, string nama); /*Search provinsi dulu, kalau null 
 void deleteData(listProvinsi &L, string nama);
 void deleteAllChild(adrProvinsi p);
 int totalPopulasi(adrDaerah d);
-int isPenuh(adrDaerah d);  // 1:Sangat rendah, 2:Rendah, 3:Sedang, 4:Padat, 5:Sangat Padat
-float gajiRataRata(adrDaerah d);
+int ispenuh(adrDaerah d);  // 1:Sangat rendah, 2:Rendah, 3:Sedang, 4:Padat, 5:Sangat Padat
+float gajiratarata(adrDaerah d);
 void menu();
 void programPemerintah(adrDaerah d);
 void sortByPendapatan(adrProvinsi p);
 void loadDummyData(listProvinsi &L) ;
+adrDaerah printPoor(adrDaerah d);
+void clearScreen();
 /*Sort, Searching, Print (Parrent, Child sebuah Provinsi, Child All), Edit, Func Operasi, Delete*/
