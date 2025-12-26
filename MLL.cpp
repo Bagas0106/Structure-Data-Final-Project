@@ -1,6 +1,7 @@
 #include "MLL.h"
 #include <iostream>
 #include <cstdlib>
+#include <windows.h>
 #include <iomanip> // Library untuk mengatur format angka
 
 using namespace std;
@@ -77,10 +78,11 @@ void printProvinsi(listProvinsi L){
         cout << "Tidak ada Provinsi" << endl;
     } else {
         while (p != nullptr){
-            cout << p->info.namaProvinsi;
-            if (p->next != nullptr){
-                cout << ", ";
-            }
+            cout << "Nama Provinsi           : " << p->info.namaProvinsi << endl;
+            cout << "Nama Ibukota            : " << p->info.ibuKota << endl;
+            cout << "Zona Watu               : " << p->info.zonaWaktu << endl;
+            cout << "Pertumbuhan Ekonomi (%) : " << p->info.pertumbuhanEkonomi << endl;
+            cout << endl;
             p = p->next;
         }
         cout << endl;
@@ -95,6 +97,7 @@ void printDaerahAll(listProvinsi L){
         p = L.first;
         while (p != nullptr){
             q = p->firstDaerah;
+            cout << "Provinsi " << p->info.namaProvinsi << endl << endl;
             if (q == nullptr){
                 cout << "Tidak ada Daerah" << endl;
             }
@@ -186,7 +189,6 @@ adrDaerah searchDaerah(listProvinsi L, string daerah){
     return nullptr;
 }
 void sortAscending(listProvinsi &L){
-    string tempp;
     if (L.first == nullptr || L.first->next == nullptr){
         return;
     }
@@ -201,9 +203,9 @@ void sortAscending(listProvinsi &L){
 
         while (ptr->next != lptr){
             if (ptr->info.namaProvinsi > ptr->next->info.namaProvinsi){
-                tempp = ptr->info.namaProvinsi;
-                ptr->info.namaProvinsi = ptr->next->info.namaProvinsi;
-                ptr->next->info.namaProvinsi = tempp;
+                infoP tempp = ptr->info;
+                ptr->info = ptr->next->info;
+                ptr->next->info = tempp;
 
                 adrDaerah tempd = ptr->firstDaerah;
                 ptr->firstDaerah = ptr->next->firstDaerah;
@@ -217,7 +219,6 @@ void sortAscending(listProvinsi &L){
     }
 }
 void sortDescending(listProvinsi &L){
-    string tempp;
     if (L.first == nullptr || L.first->next == nullptr){
         return;
     }
@@ -233,9 +234,9 @@ void sortDescending(listProvinsi &L){
         while (ptr->next != lptr){
             if (ptr->info.namaProvinsi < ptr->next->info.namaProvinsi){
 
-                tempp = ptr->info.namaProvinsi;
-                ptr->info.namaProvinsi = ptr->next->info.namaProvinsi;
-                ptr->next->info.namaProvinsi = tempp;
+                infoP tempp = ptr->info;
+                ptr->info = ptr->next->info;
+                ptr->next->info = tempp;
 
                 adrDaerah tempd = ptr->firstDaerah;
                 ptr->firstDaerah = ptr->next->firstDaerah;
@@ -248,26 +249,13 @@ void sortDescending(listProvinsi &L){
         lptr = ptr;
     }
 }
-void deleteAllChild(adrProvinsi p){
-    adrDaerah q;
-    if (p->firstDaerah != nullptr){
-        q = p->firstDaerah;
-        while (q != nullptr){
-            while  (q->next != nullptr){
-                q = q->next;
-            }
-            q->next->prev = nullptr;
-            q->next = nullptr;
-        }
-    }
-}
 void editData(listProvinsi &L, string nama){
     string newname;
 
     adrProvinsi p = L.first;
     while (p != nullptr){
         if (p->info.namaProvinsi == nama){
-            cout << "[PROVINSI DITEMUKAN!]" << nama << endl;
+            cout << "[PROVINSI DITEMUKAN!] " << nama <<endl;
             cout << "Masukan Nama Provinsi baru: ";
             cin >> newname;
 
@@ -284,7 +272,7 @@ void editData(listProvinsi &L, string nama){
 
         while(d != nullptr){
             if (d->info.namaDaerah == nama){
-                cout << "[DAERAH DITEMUKAN!]" << nama << "Diprovinsi " << p->info.namaProvinsi << endl;
+                cout << "[DAERAH DITEMUKAN!] " << nama << " Diprovinsi " << p->info.namaProvinsi << endl;
                 cout << "Masukan Nama Daerah Baru: ";
                 cin >> newname;
 
@@ -299,38 +287,53 @@ void editData(listProvinsi &L, string nama){
 
     cout << "Maaf , data '" << nama << "'Tidak ditemukan di provinsi maupun didaerah manapun." << endl;
 
-} /*Search provinsi dulu, kalau null lanjut ke search Daerah*/
-void deleteData(listProvinsi &L, string nama){
+}
+void deleteData(listProvinsi &L, string nama) {
     adrProvinsi p = L.first;
-    while (p != nullptr){
-        if (p->info.namaProvinsi == nama){
-            p->next->prev = p->prev;
-            p->prev->next = p->next;
-            p->next = nullptr;
-            p->prev = nullptr;
-            deleteAllChild(p);
+    while (p != nullptr) {
+        if (p->info.namaProvinsi == nama) {
+            if (p == L.first && p == L.last) {
+                L.first = nullptr;
+                L.last = nullptr;
+            } else if (p == L.first) {
+                L.first = p->next;
+                L.first->prev = nullptr;
+            } else if (p == L.last) {
+                L.last = p->prev;
+                L.last->next = nullptr;
+            } else {
+                p->prev->next = p->next;
+                p->next->prev = p->prev;
+            }
+            p->firstDaerah = nullptr;
+            delete p;
+            cout << "[PROVINSI BERHASIL DIHAPUS!]" << endl;
             return;
         }
         p = p->next;
     }
-    p = L.first;
-    while (p != nullptr){
-        adrDaerah d = p->firstDaerah;
 
-        while(d != nullptr){
-            if (d->info.namaDaerah == nama){
-                d->next->prev = d->prev;
-                d->prev->next = d->next;
-                d->next = nullptr;
-                d->prev = nullptr;
-                cout << "[DATA BERHASIL DIHAPUS!]" << endl;
+    p = L.first;
+    while (p != nullptr) {
+        adrDaerah d = p->firstDaerah;
+        while (d != nullptr) {
+            if (d->info.namaDaerah == nama) {
+                if (d == p->firstDaerah) {
+                    p->firstDaerah = d->next;
+                    if (p->firstDaerah != nullptr) p->firstDaerah->prev = nullptr;
+                } else {
+                    d->prev->next = d->next;
+                    if (d->next != nullptr) d->next->prev = d->prev;
+                }
+                delete d;
+                cout << "[DAERAH BERHASIL DIHAPUS!]" << endl;
                 return;
             }
             d = d->next;
         }
         p = p->next;
     }
-    cout << "Maaf , data '" << nama << "'Tidak ditemukan di provinsi maupun didaerah manapun." << endl;
+    cout << "Data tidak ditemukan." << endl;
 }
 int totalPopulasi(adrDaerah d){
     return d->info.populasiDewasa + d->info.populasiAnak;
@@ -380,31 +383,59 @@ void menu(){
     cout << "8.Edit data (Provinsi maupun Daerah)                        " << endl;
     cout << "9.Delete Data                                               " << endl; // Opsi 1 Semua Provinsi, 2 Satu Provinsi, Opsi 3 Ke Menu Utama
     cout << "10.Tampilkan Gaji Rata Rata (Tiap Provinsi)                 " << endl; // Opsi 1 Urutkan Opsi 2 Ke Menu Utama
-    cout << "11.Tampilkan Provinsi berdasarkan Kepadatan                 " << endl; // Opsi 1 Sangat Padat, 2 Padat, 3 Sedang, Rendah, Sangat Rendah
+    cout << "11.Urutkan Kota Berdasarkan Pendapatan                      " << endl;
+    cout << "12.Tampilkan Provinsi berdasarkan Kepadatan                 " << endl; // Opsi 1 Sangat Padat, 2 Padat, 3 Sedang, Rendah, Sangat Rendah
+    cout << "13.Program Pemerintah (Special Event)                       " << endl;
     cout << "0.exit                                                      " << endl;
     cout << "============================================================" << endl << endl;
 
 }
-void programPemerintah(adrDaerah d){
-    cout << "Pemerintah membuka lowongan kerja (19 juta) di bidang Industrialisasi & Investasi Sektor Teknologi" << endl;
-    int temp;
-    if (isPoor(d)){
-        temp = d->info.pendapatan1juta;
-        d->info.pendapatan1juta = d->info.pendapatan1juta - temp;
-        d->info.pendapatan2juta += temp;
+void programPemerintah(adrDaerah d) {
+    if (d == nullptr) return;
+    int totalDiBracket;
+    int pengangguran;
+
+    cout << "Pemerintah menjalankan program peningkatan ekonomi di " << d->info.namaDaerah << "..." << endl;
+
+    while (isPoor(d)) {
+        if (d->info.pendapatan1juta > 0) {
+            d->info.pendapatan4juta += d->info.pendapatan1juta;
+            d->info.pendapatan1juta = 0;
+        } else if (d->info.pendapatan2juta > 0) {
+            d->info.pendapatan4juta += d->info.pendapatan2juta;
+            d->info.pendapatan2juta = 0;
+        } else if (d->info.pendapatan3juta > 0) {
+            d->info.pendapatan4juta += d->info.pendapatan3juta;
+            d->info.pendapatan3juta = 0;
+        } else {
+            break;
+        }
     }
-    if (isPoor(d)){
-        cout << "Program Pemerintah belum berhasil, Pemerintah berusaha memberikan pendidikan lebih tinggi buat masyarakat yang sebelumnya berpendapat 1 juta" << endl;
-        d->info.pendapatan2juta = d->info.pendapatan2juta - temp;
-        d->info.pendapatan3juta += temp;
-    }
-    if (isPoor(d)){
-        cout << "Program Pemerintah masih belum berhasil juga. Pemerintah memutuskan untuk memberikan pendidikan tinggi buat masyarakat berpenghasilan 2 juta" << endl;
-        temp = d->info.pendapatan2juta;
-        d->info.pendapatan2juta = d->info.pendapatan2juta - temp;
-        d->info.pendapatan3juta += temp;
+    d->info.gajiRataRata = gajiratarata(d);
+
+    if (!isPoor(d)) {
+        cout << "[BERHASIL] Target tercapai. Gaji rata-rata sekarang: " << fixed << setprecision(0) << d->info.gajiRataRata << endl;
     } else {
-        cout << "Masyarakat tidak bisa diselamatan" << endl;
+        cout << "[GAGAL] Sumber daya tidak cukup untuk mengangkat rata-rata di atas 3 juta." << endl;
+        Sleep(1500);
+        cout << "UPAYA TERAKHIR: Pemerintah membuka lapangan kerja masif untuk pengangguran (Gaji 2 Juta)..." << endl;
+
+        totalDiBracket = d->info.pendapatan1juta + d->info.pendapatan2juta + d->info.pendapatan3juta + d->info.pendapatan4juta;
+        pengangguran = d->info.populasiDewasa - totalDiBracket;
+
+        if (pengangguran > 0) {
+            d->info.pendapatan2juta += pengangguran;
+            d->info.gajiRataRata = gajiratarata(d);
+
+            if (!isPoor(d)) {
+                cout << "[BERHASIL AKHIR] Dengan mempekerjakan " << pengangguran << " pengangguran, target tercapai!" << endl;
+            } else {
+                cout << "[GAGAL TOTAL] Bahkan setelah mempekerjakan semua orang, rata-rata tetap di bawah 3 juta." << endl;
+            }
+        } else {
+            cout << "Tidak ada pengangguran (semua penduduk dewasa sudah memiliki pekerjaan)." << endl;
+            cout << "Namun tetap tida bisa diselamatkan " << endl;
+        }
     }
 }
 
@@ -440,10 +471,12 @@ void sortByPendapatan(adrProvinsi p) {
 }
 
 adrDaerah printPoor(adrDaerah d){
-    adrDaerah d1;
-    if (d1 != nullptr){
-        cout << "Pendapatan Rata Rata: " << d1->info.gajiRataRata << endl;
-        return printPoor(d1->next);
+    if (d != nullptr){
+        cout << "Nama Kota : " << d->info.namaDaerah << endl;
+        cout << "Pendapatan Rata Rata: " << fixed << setprecision(0) << d->info.gajiRataRata << endl << endl;
+        return printPoor(d->next);
+    } else {
+        return nullptr;
     }
 }
 
@@ -454,4 +487,34 @@ void clearScreen(){
     #else
         system("clear");
     #endif
+}
+void printSatuProvinsi(adrProvinsi p){
+    cout << "Nama Provinsi           : " << p->info.namaProvinsi << endl;
+    cout << "Nama Ibu Kota           : " << p->info.ibuKota << endl;
+    cout << "Zona Waktu              : " << p->info.zonaWaktu << endl;
+    cout << "Pertumbuhan Ekonomi (%) : " << p->info.pertumbuhanEkonomi << endl;
+    cout << endl;
+
+    printDaerah(p);
+}
+
+adrDaerah printKepadatan(adrDaerah d){
+    if (d != nullptr){
+        cout << "Nama Kota : " << d->info.namaDaerah << endl;
+        if (d->info.isPenuh == 1){
+            cout << "Kepadatan      : Sangat Rendah" << endl;
+        } else if (d->info.isPenuh == 2){
+            cout << "Kepadatan      : Rendah" << endl;
+        } else if (d->info.isPenuh == 3){
+            cout << "Kepadatan      : Sedang" << endl;
+        } else if (d->info.isPenuh == 4){
+            cout << "Kepadatan      : Padat" << endl;
+        } else if (d->info.isPenuh == 5){
+            cout << "Kepadatan      : Sangat Rendah" << endl;
+        }
+        cout << endl;
+        return printKepadatan(d->next);
+    } else {
+        return nullptr;
+    }
 }

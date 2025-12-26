@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include <windows.h>
 #include <iomanip> // Library untuk mengatur format angka
 using namespace std;
 
@@ -68,7 +69,6 @@ void sortAscending(listProvinsi &L);
 void sortDescending(listProvinsi &L);
 void editData(listProvinsi &L, string nama); /*Search provinsi dulu, kalau null lanjut ke search Daerah*/
 void deleteData(listProvinsi &L, string nama);
-void deleteAllChild(adrProvinsi p);
 int totalPopulasi(adrDaerah d);
 int ispenuh(adrDaerah d);  // 1:Sangat rendah, 2:Rendah, 3:Sedang, 4:Padat, 5:Sangat Padat
 float gajiratarata(adrDaerah d);
@@ -78,4 +78,6 @@ void sortByPendapatan(adrProvinsi p);
 void loadDummyData(listProvinsi &L) ;
 adrDaerah printPoor(adrDaerah d);
 void clearScreen();
+void printSatuProvinsi(adrProvinsi p);
+adrDaerah printKepadatan(adrDaerah d);
 /*Sort, Searching, Print (Parrent, Child sebuah Provinsi, Child All), Edit, Func Operasi, Delete*/
