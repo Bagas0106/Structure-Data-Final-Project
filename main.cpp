@@ -73,7 +73,6 @@ int main(){
         menu();
         cout << "Masukkan angka: ";
         cin >> masukkan;
-        cout << endl;
         switch(masukkan){
             case 1:
                 printDaerahAll(L);
@@ -81,14 +80,19 @@ int main(){
             case 2:
                 cout << "Masukkan Nama Provinsi : ";
                 cin >> infoProvinsi.namaProvinsi;
-                cout << "Masukkan Nama Ibukota : ";
-                cin >> infoProvinsi.ibuKota;
-                cout << "Masukkan Nama Zona Waktu : ";
-                cin >> infoProvinsi.zonaWaktu;
-                cout << "Masukkan Pertumbuhan Ekonomi (&%) : ";
-                cin >> infoProvinsi.pertumbuhanEkonomi;
-                p = createElmProvinsi(infoProvinsi);
-                addProvinsi(L, p);
+                p = searchProvinsi(L, infoProvinsi.namaProvinsi);
+                if (p != nullptr){
+                    cout << "Provinsi Sudah ada" << endl;
+                } else {
+                    cout << "Masukkan Nama Ibukota : ";
+                    cin >> infoProvinsi.ibuKota;
+                    cout << "Masukkan Nama Zona Waktu : ";
+                    cin >> infoProvinsi.zonaWaktu;
+                    cout << "Masukkan Pertumbuhan Ekonomi (%) : ";
+                    cin >> infoProvinsi.pertumbuhanEkonomi;
+                    p = createElmProvinsi(infoProvinsi);
+                    addProvinsi(L, p);
+                }
                 break;
             case 3:
                 cout << "Masukan Provinsi yang ingin dimasukin      : ";
@@ -127,30 +131,38 @@ int main(){
                 cout << "Masukan Provinsi yang ingin dicari      : ";
                 cin >> masukkanString;
                 p = searchProvinsi(L, masukkanString);
-                printSatuProvinsi(p);
+                if (p == nullptr){
+                    cout << "Provinsi Tidak Ditemukan" << endl;
+                } else {
+                    printSatuProvinsi(p);
+                }
                 break;
             case 5:
                 printDaerahAll(L);
                 cout << "Masukan Daerah yang ingin dicari : ";
                 cin >> masukkanString;
                 d = searchDaerah(L, masukkanString);
-                cout << "Nama Daerah    :" << d->info.namaDaerah << endl;
-                cout << "Tipe Daerah    :" << d->info.tipeWilayah << endl;
-                cout << "Tipe Dewasa    :" << d->info.populasiDewasa << endl;
-                cout << "Tipe Anak      :" << d->info.populasiAnak << endl;
-                cout << "Populasi       :" << d->info.populasi << endl;
-                cout << "Luas Wilayah   :" << d->info.luasWilayah << endl;
-                cout << "Gaji Rata Rata :" << fixed << setprecision(0) << d->info.gajiRataRata << endl;
-                if (d->info.isPenuh == 1){
-                    cout << "Kepadatan      : Sangat Rendah" << endl;
-                } else if (d->info.isPenuh == 2){
-                    cout << "Kepadatan      : Rendah" << endl;
-                } else if (d->info.isPenuh == 3){
+                if (d == nullptr){
+                    cout << "Daerah Tidak Ditemukan! " << endl;
+                } else {
+                    cout << "Nama Daerah    :" << d->info.namaDaerah << endl;
+                    cout << "Tipe Daerah    :" << d->info.tipeWilayah << endl;
+                    cout << "Tipe Dewasa    :" << d->info.populasiDewasa << endl;
+                    cout << "Tipe Anak      :" << d->info.populasiAnak << endl;
+                    cout << "Populasi       :" << d->info.populasi << endl;
+                    cout << "Luas Wilayah   :" << d->info.luasWilayah << endl;
+                    cout << "Gaji Rata Rata :" << fixed << setprecision(0) << d->info.gajiRataRata << endl;
+                    if (d->info.isPenuh == 1){
+                        cout << "Kepadatan      : Sangat Rendah" << endl;
+                    } else if (d->info.isPenuh == 2){
+                        cout << "Kepadatan      : Rendah" << endl;
+                    } else if (d->info.isPenuh == 3){
                     cout << "Kepadatan      : Sedang" << endl;
-                } else if (d->info.isPenuh == 4){
-                    cout << "Kepadatan      : Padat" << endl;
-                } else if (d->info.isPenuh == 5){
-                    cout << "Kepadatan      : Sangat Rendah" << endl;
+                    } else if (d->info.isPenuh == 4){
+                        cout << "Kepadatan      : Padat" << endl;
+                    } else if (d->info.isPenuh == 5){
+                        cout << "Kepadatan      : Sangat Rendah" << endl;
+                    }
                 }
                 cout << endl;
                 break;

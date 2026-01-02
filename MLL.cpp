@@ -58,7 +58,6 @@ void addDaerah(adrProvinsi p, adrDaerah d){
         d->prev = q;
     }
 }
-
 adrDaerah searchIbuKota(adrProvinsi p, string ibuKota){
     if (p == nullptr){
         return nullptr;
@@ -104,8 +103,8 @@ void printDaerahAll(listProvinsi L){
             while (q != nullptr){
                 cout << "Nama Daerah    :" << q->info.namaDaerah << endl;
                 cout << "Tipe Daerah    :" << q->info.tipeWilayah << endl;
-                cout << "Tipe Dewasa    :" << q->info.populasiDewasa << endl;
-                cout << "Tipe Anak      :" << q->info.populasiAnak << endl;
+                cout << "Populasi Dewasa:" << q->info.populasiDewasa << endl;
+                cout << "Populasi Anak  :" << q->info.populasiAnak << endl;
                 cout << "Populasi       :" << q->info.populasi << endl;
                 cout << "Luas Wilayah   :" << q->info.luasWilayah << endl;
                 cout << "Gaji Rata Rata :" << fixed << setprecision(0) << q->info.gajiRataRata << endl;
@@ -138,8 +137,8 @@ void printDaerah(adrProvinsi p){
         while (q != nullptr){
             cout << "Nama Daerah    :" << q->info.namaDaerah << endl;
             cout << "Tipe Daerah    :" << q->info.tipeWilayah << endl;
-            cout << "Tipe Dewasa    :" << q->info.populasiDewasa << endl;
-            cout << "Tipe Anak      :" << q->info.populasiAnak << endl;
+            cout << "Populasi Dewasa:" << q->info.populasiDewasa << endl;
+            cout << "Populasi Anak  :" << q->info.populasiAnak << endl;
             cout << "Populasi       :" << q->info.populasi << endl;
             cout << "Luas Wilayah   :" << q->info.luasWilayah << endl;
             cout << "Gaji Rata Rata :" << fixed << setprecision(0) << q->info.gajiRataRata << endl;
@@ -367,26 +366,25 @@ float gajiratarata(adrDaerah d){
 bool isPoor(adrDaerah d){
     return gajiratarata(d) < 3000000;
 }
-
 void menu(){
     clearScreen();
     cout << "============================================================" << endl;
-    cout << "         SISTEM INFORMASI STATISTIK EKONOMI PROVINSI        " << endl;
+    cout << "             SISTEM INFORMASI PENDAPATAN DAERAH             " << endl;
     cout << "============================================================" << endl;
-    cout << "1.Tampilkan Data All                                        " << endl;
-    cout << "2.Tambah Provinsi                                           " << endl;
-    cout << "3.Tambah Daerah                                             " << endl;
-    cout << "4.Cari Provinsi                                             " << endl;
-    cout << "5.Cari Daerah                                               " << endl;
-    cout << "6.Mengurutkan Provinsi ascending berdasarkan Alphabet       " << endl;
-    cout << "7.Mengurutkan Provinsi decending berdasarkan Alphabet       " << endl;
-    cout << "8.Edit data (Provinsi maupun Daerah)                        " << endl;
-    cout << "9.Delete Data                                               " << endl; // Opsi 1 Semua Provinsi, 2 Satu Provinsi, Opsi 3 Ke Menu Utama
-    cout << "10.Tampilkan Gaji Rata Rata (Tiap Provinsi)                 " << endl; // Opsi 1 Urutkan Opsi 2 Ke Menu Utama
-    cout << "11.Urutkan Kota Berdasarkan Pendapatan                      " << endl;
-    cout << "12.Tampilkan Provinsi berdasarkan Kepadatan                 " << endl; // Opsi 1 Sangat Padat, 2 Padat, 3 Sedang, Rendah, Sangat Rendah
-    cout << "13.Program Pemerintah (Special Event)                       " << endl;
-    cout << "0.exit                                                      " << endl;
+    cout << " 1. Tampilkan Data All                                      " << endl;
+    cout << " 2. Tambah Provinsi                                         " << endl;
+    cout << " 3. Tambah Daerah                                           " << endl;
+    cout << " 4. Cari Provinsi                                           " << endl;
+    cout << " 5. Cari Daerah                                             " << endl;
+    cout << " 6. Mengurutkan Provinsi ascending berdasarkan Alphabet     " << endl;
+    cout << " 7. Mengurutkan Provinsi decending berdasarkan Alphabet     " << endl;
+    cout << " 8. Edit data (Provinsi maupun Daerah)                      " << endl;
+    cout << " 9. Delete Data                                             " << endl; // Opsi 1 Semua Provinsi, 2 Satu Provinsi, Opsi 3 Ke Menu Utama
+    cout << "10. Tampilkan Gaji Rata Rata (Satu Provinsi)                " << endl; // Opsi 1 Urutkan Opsi 2 Ke Menu Utama
+    cout << "11. Urutkan Kota Berdasarkan Pendapatan                     " << endl;
+    cout << "12. Tampilkan Provinsi berdasarkan Kepadatan                " << endl; // Opsi 1 Sangat Padat, 2 Padat, 3 Sedang, Rendah, Sangat Rendah
+    cout << "13. Program Pemerintah (Special Event)                      " << endl;
+    cout << " 0. exit                                                    " << endl;
     cout << "============================================================" << endl << endl;
 
 }
@@ -438,14 +436,13 @@ void programPemerintah(adrDaerah d) {
         }
     }
 }
-
 void sortByPendapatan(adrProvinsi p) {
     if (p == nullptr || p->firstDaerah == nullptr) {
         cout << "Tidak ada data daerah untuk diurutkan." << endl;
         return;
     }
 
-    bool tukar;
+    bool tukar = true;
     adrDaerah d;
     adrDaerah last = nullptr;
 
@@ -454,8 +451,7 @@ void sortByPendapatan(adrProvinsi p) {
         d = p->firstDaerah;
 
         while (d->next != last) {
-            if (gajiratarata(d) < gajiratarata(d->next)) {
-
+            if (d->info.gajiRataRata < d->next->info.gajiRataRata) {
                 infoD tempInfo = d->info;
                 d->info = d->next->info;
                 d->next->info = tempInfo;
@@ -466,10 +462,8 @@ void sortByPendapatan(adrProvinsi p) {
         }
         last = d;
     }
-
     cout << "Daerah di " << p->info.namaProvinsi << " berhasil diurutkan berdasarkan pendapatan tertinggi." << endl;
 }
-
 adrDaerah printPoor(adrDaerah d){
     if (d != nullptr){
         cout << "Nama Kota : " << d->info.namaDaerah << endl;
@@ -479,8 +473,6 @@ adrDaerah printPoor(adrDaerah d){
         return nullptr;
     }
 }
-
-
 void clearScreen(){
     #ifdef _WIN32
         system("cls");
@@ -497,7 +489,6 @@ void printSatuProvinsi(adrProvinsi p){
 
     printDaerah(p);
 }
-
 adrDaerah printKepadatan(adrDaerah d){
     if (d != nullptr){
         cout << "Nama Kota : " << d->info.namaDaerah << endl;
